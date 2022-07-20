@@ -1,0 +1,59 @@
+{
+  "name": "@fastify-modular/pg",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "types": "./types/index.d.ts",
+  "main": "./cjs/index.js",
+  "module": "./esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "types": "./types/index.d.ts",
+      "require": "./cjs/index.js"
+    }
+  },
+  "files": [
+    "types/**/*.d.ts",
+    "cjs/**/*.js",
+    "cjs/package.json",
+    "esm/**/*.js",
+    "esm/package.json"
+  ],
+  "scripts": {
+    "build": "rimraf \"{cjs,esm,types}/**/*.{js,js.map,d.ts,d.ts.map}\" && tsc -b ./cjs/tsconfig.json ./esm/tsconfig.json ./types/tsconfig.json",
+    "watch": "rimraf \"{cjs,esm,types}/**/*.{js,js.map,d.ts,d.ts.map}\" && tsc -b ./cjs/tsconfig.json ./esm/tsconfig.json ./types/tsconfig.json --watch",
+    "postversion": "npm publish",
+    "prepack": "npm run build",
+    "setup-test": "docker compose -f ./test/docker-compose.yml -p fastify-modular-pg up -d ",
+    "test": "tap --node-arg=--loader=ts-node/esm ./test/*.ts --test-ignore \".+\\.ignore\\.ts$\""
+  },
+  "keywords": [
+    "fastify",
+    "pg",
+    "postgres",
+    "fastify-modular"
+  ],
+  "author": "egoavara",
+  "license": "MIT",
+  "dependencies": {
+    "@types/pg": "^8.6.5",
+    "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "@fastify-modular/request": "^0.8.2",
+    "@fastify-modular/route": "^0.8.1",
+    "@types/node": "^18.0.5",
+    "@types/tap": "^15.0.7",
+    "fastify": "^4.2.0",
+    "fastify-modular": "^0.8.7",
+    "pito": "^0.4.2",
+    "rimraf": "^3.0.2",
+    "tap": "^16.3.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4"
+  },
+  "peerDependencies": {
+    "fastify-modular": "^0.8.7"
+  }
+}

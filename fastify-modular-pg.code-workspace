@@ -1,0 +1,46 @@
+{
+	"folders": [
+		{
+			"path": "./src",
+			"name": "[source]"
+		},
+		{
+			"path": "./test",
+			"name": "[test]"
+		},
+		{
+			"path": ".",
+			"name": "[root]"
+		}
+	],
+	"settings": {
+		"typescript.preferences.importModuleSpecifierEnding": "js",
+		"typescript.tsdk": "[root]/node_modules/typescript/lib",
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "watch",
+				"type": "npm",
+				"script": "watch",
+				"problemMatcher": [
+					"$tsc-watch"
+				],
+				"group": {
+					"kind": "build",
+					"isDefault": true
+				}
+			},
+			{
+				"label": "test",
+				"type": "npm",
+				"script": "test",
+				"group": {
+					"kind": "test",
+					"isDefault": true
+				}
+			},
+		]
+	}
+}
