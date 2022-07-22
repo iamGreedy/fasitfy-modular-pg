@@ -23,7 +23,7 @@
   "scripts": {
     "build": "rimraf \"{cjs,esm,types}/**/*.{js,js.map,d.ts,d.ts.map}\" && tsc -b ./cjs/tsconfig.json ./esm/tsconfig.json ./types/tsconfig.json",
     "watch": "rimraf \"{cjs,esm,types}/**/*.{js,js.map,d.ts,d.ts.map}\" && tsc -b ./cjs/tsconfig.json ./esm/tsconfig.json ./types/tsconfig.json --watch",
-    "postversion": "npm publish",
+    "postversion": "npm publish --access=public",
     "prepack": "npm run build",
     "test": "tap --node-arg=--loader=ts-node/esm ./test/*.ts --test-ignore \".+\\.ignore\\.ts$\""
   },
