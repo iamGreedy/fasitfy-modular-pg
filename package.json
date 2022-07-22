@@ -25,7 +25,6 @@
     "watch": "rimraf \"{cjs,esm,types}/**/*.{js,js.map,d.ts,d.ts.map}\" && tsc -b ./cjs/tsconfig.json ./esm/tsconfig.json ./types/tsconfig.json --watch",
     "postversion": "npm publish",
     "prepack": "npm run build",
-    "setup-test": "docker compose -f ./test/docker-compose.yml -p fastify-modular-pg up -d ",
     "test": "tap --node-arg=--loader=ts-node/esm ./test/*.ts --test-ignore \".+\\.ignore\\.ts$\""
   },
   "keywords": [
