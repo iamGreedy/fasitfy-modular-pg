@@ -5,8 +5,8 @@ import pg from "pg"
 import { Readable } from "stream"
 import { json } from "stream/consumers"
 
-export type PgPool = pg.Pool
-export type PgPoolClient = pg.PoolClient
+export type PgPool = Pick<pg.Pool, keyof pg.Pool>
+export type PgPoolClient = Pick<pg.PoolClient, keyof pg.PoolClient>
 export type PostgresModuleOption =
     | { file: string, format?: 'json' }
     | PoolConfig
@@ -36,9 +36,9 @@ export const PostgresModule = FastifyModular('postgres')
     // pool connection automatically get and release connection per request(HTTP, WS)
     .dynamic("transaction", 5000,
         async ({ pool }) => {
-            const tx = await pool.connect()
+            const tx = await pool.connect() as PgPoolClient
             await tx.query("begin");
-            return tx as PgPoolClient
+            return tx
         },
         async ({ value, catched }) => {
             if (catched === undefined) {
