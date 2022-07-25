@@ -5,8 +5,8 @@ import pg from "pg"
 import { Readable } from "stream"
 import { json } from "stream/consumers"
 
-const { Pool } = pg
-
+export type PgPool = pg.Pool
+export type PgPoolClient = pg.PoolClient
 export type PostgresModuleOption =
     | { file: string, format?: 'json' }
     | PoolConfig
@@ -27,9 +27,9 @@ export const PostgresModule = FastifyModular('postgres')
                     throw new Error(`[PostgresModule] unknown format '${option.format}'`)
                     break
             }
-            return new Pool(config)
+            return new pg.Pool(config) as PgPool
         }
-        return new Pool(option)
+        return new pg.Pool(option) as PgPool
     })
     // ====================================================================================
     // transaction is instance of pg.PoolClient
@@ -38,7 +38,7 @@ export const PostgresModule = FastifyModular('postgres')
         async ({ pool }) => {
             const tx = await pool.connect()
             await tx.query("begin");
-            return tx
+            return tx as PgPoolClient
         },
         async ({ value, catched }) => {
             if (catched === undefined) {
