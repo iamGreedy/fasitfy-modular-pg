@@ -17,25 +17,9 @@ export const PostgresModule = FastifyModular('postgres')
     // ====================================================================================
     // transaction is instance of pg.PoolClient
     // pool connection automatically get and release connection per request(HTTP, WS)
-    .dynamic("txPg:raw", 5000,
+    .dynamic("txPg", 5000,
         async ({ pg }) => {
             const tx = await pg.connect() as PgPoolClient
-            await tx.query("begin");
-            return tx
-        },
-        async ({ value, catched }) => {
-            if (catched === undefined) {
-                await value.query("commit");
-                value.release()
-            } else {
-                await value.query("rollback");
-                value.release()
-            }
-        }
-    )
-    .dynamic("txPg", 5000,
-        async ({ "txPg:raw":txPgRaw }) => {
-            const tx = await txPgRaw as PgPoolClient
             await tx.query("begin");
             return tx
         },
